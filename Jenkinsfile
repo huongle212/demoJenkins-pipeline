@@ -1,4 +1,4 @@
-def CREDENTIAL_ID = 'huongle212lth0810@_' // Thông tin đã đăng ký trong phần tạo Credentials_ID
+def CREDENTIAL_ID = 'huongle212+lth0810@_' // Thông tin đã đăng ký trong phần tạo Credentials_ID
 def SCM_URL = "https://github.com/huongle212/demoJenkins-pipeline.git" // Link source
 def BRANCH = ""
 
@@ -9,7 +9,8 @@ pipeline {
         stage('Set Enviroments') {
             steps {
                 script {
-                    BRANCH = "${env.BRANCH_NAME}"
+                    BRANCH = "${GIT_BRANCH.split("/")[1]}"
+                    echo "${BRANCH}"
                 }
             }
         }
