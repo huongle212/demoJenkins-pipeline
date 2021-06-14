@@ -39,7 +39,6 @@ pipeline {
                 // Create Build file
                 writeFile file: 'build.bat', text: """
                     MSBuild.exe /t:Clean /verbosity:quiet
-                    nuget restore
                     :: MSBuild.exe /t:Restore /verbosity:quiet
                     MSBuild.exe /t:Restore,Rebuild,Publish /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk} /verbosity:quiet
                 """
