@@ -17,7 +17,6 @@ pipeline {
             steps {
                 script {
                     BRANCH = "${GIT_BRANCH.split("/")[1]}"
-                    echo "${BRANCH}"
                 }
             }
         }
