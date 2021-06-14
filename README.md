@@ -1,3 +1,3 @@
-# demoJenkins
+# Demo CICD tích hợp Jenkins với Github
 
-CICD - Tích hợp jenkins với gilab
+1. Add Webhook
