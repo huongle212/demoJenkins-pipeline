@@ -1,9 +1,9 @@
-pipeline{
+pipeline {
   agent any
-  stages{
-    stage('Clone'){
+  stages {
+    stage('Clone') {
       step{
-        git clone https://github.com/huongle212/demoJenkins-pipeline.git
+        git 'https://github.com/huongle212/demoJenkins-pipeline.git'
       }
     }
   }
