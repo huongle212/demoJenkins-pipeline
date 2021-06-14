@@ -29,6 +29,14 @@ pipeline {
         stage('Build Code') {
             steps {
                 echo "Build Code"
+                // Create Build file
+                writeFile file: 'build.bat', text: """
+                    cd ${WORKSPACE_DIR}\\${codeDir}\\
+                    MSBuild.exe /t:Clean /verbosity:quiet
+                    nuget restore
+                    :: MSBuild.exe /t:Restore /verbosity:quiet
+                    MSBuild.exe /t:Restore,Rebuild,Publish /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk}\\${PROJECT_NAME}\\ /verbosity:quiet
+                """
             }
         }
     }
