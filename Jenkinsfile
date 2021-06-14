@@ -17,11 +17,9 @@ pipeline {
                 ])
             }
         }
-    }
-    stage('Build Code') {
+        stage('Build Code') {
             steps {
-                // Create Build file
-                echo "Build code"
+                echo "Build Code"
             }
         }
     }
