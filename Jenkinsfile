@@ -5,6 +5,11 @@ def SCM_URL = "https://github.com/huongle212/demoJenkins-pipeline.git" // Link s
 def BRANCH = ""
 
 pipeline {
+    environment {
+        // Publish Informations
+        localPublishOnDisk = "E:\\OJT\Winform\\Publish\\${PROJECT_NAME}\\"
+        localPublish = "../${PROJECT_NAME}/"
+    }
     agent any 
     
     stages {
@@ -36,7 +41,7 @@ pipeline {
                     MSBuild.exe /t:Clean /verbosity:quiet
                     nuget restore
                     :: MSBuild.exe /t:Restore /verbosity:quiet
-                    MSBuild.exe /t:Restore,Rebuild,Publish /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk}\\${PROJECT_NAME}\\ /verbosity:quiet
+                    MSBuild.exe /t:Restore,Rebuild,Publish /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk} /verbosity:quiet
                 """
             }
         }
