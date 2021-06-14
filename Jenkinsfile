@@ -39,10 +39,10 @@ pipeline {
                 echo "Build Code"
                 // Create Build file
                 writeFile file: 'build.bat', text: """
-                    "${MSBUILD_PATH}" /t:Clean /verbosity:quiet
-                    :: MSBuild.exe /t:Restore /verbosity:quiet
+                    :: build clickonce bang msbuild
                     "${MSBUILD_PATH}" /t:Restore,Rebuild,Publish "${PROJECT_NAME}.sln" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk} /verbosity:quiet
                 """
+                build.bat
             }
         }
     }
