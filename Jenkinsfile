@@ -7,7 +7,7 @@ def BRANCH = ""
 pipeline {
     environment {
         // Publish Informations
-        localPublishOnDisk = "E:\\OJT\Winform\\Publish\\${PROJECT_NAME}\\"
+        localPublishOnDisk = "E:\\OJT\\Winform\\Publish\\${PROJECT_NAME}\\"
         localPublish = "../${PROJECT_NAME}/"
     }
     agent any 
