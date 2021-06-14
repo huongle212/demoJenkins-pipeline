@@ -1,3 +1,5 @@
+def PROJECT_NAME = "Calculator" // Khai báo biển tên Tool để sử dụng ở dưới
+def WORKSPACE_DIR = "E:\\Jenkins\\.jenkins\\workspace\\${env.JOB_BASE_NAME}"
 def CREDENTIAL_ID = 'huongle212+lth0810@_' // Thông tin đã đăng ký trong phần tạo Credentials_ID
 def SCM_URL = "https://github.com/huongle212/demoJenkins-pipeline.git" // Link source
 def BRANCH = ""
@@ -31,7 +33,6 @@ pipeline {
                 echo "Build Code"
                 // Create Build file
                 writeFile file: 'build.bat', text: """
-                    cd ${WORKSPACE_DIR}\\${codeDir}\\
                     MSBuild.exe /t:Clean /verbosity:quiet
                     nuget restore
                     :: MSBuild.exe /t:Restore /verbosity:quiet
