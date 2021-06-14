@@ -42,7 +42,7 @@ pipeline {
                     :: build clickonce bang msbuild
                     "${MSBUILD_PATH}" /t:Restore,Rebuild,Publish "${PROJECT_NAME}.sln" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk} /verbosity:quiet
                 """
-                build.bat
+                bat "build.bat"
             }
         }
     }
