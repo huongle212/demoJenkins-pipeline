@@ -2,3 +2,4 @@
 
 1. Add Webhook
 2. Dùng Jenkinsfile
+3. Test webhook
