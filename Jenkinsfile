@@ -1,6 +1,6 @@
 def PROJECT_NAME = "Calculator" // Khai báo biển tên Tool để sử dụng ở dưới
 def WORKSPACE_DIR = "E:\\Jenkins\\.jenkins\\workspace\\${env.JOB_BASE_NAME}"
-def CREDENTIAL_ID = 'huongle212+lth0810@_' // Thông tin đã đăng ký trong phần tạo Credentials_ID
+def CREDENTIAL_ID = 'github_cre' // Thông tin đã đăng ký trong phần tạo Credentials_ID
 def SCM_URL = "https://github.com/huongle212/demoJenkins-pipeline.git" // Link source
 def BRANCH = ""
 def MSBUILD_PATH="C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\MSBuild.exe"
