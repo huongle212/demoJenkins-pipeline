@@ -40,7 +40,7 @@ pipeline {
                 // Create Build file
                 writeFile file: 'build.bat', text: """
                     :: build clickonce bang msbuild
-                    "${MSBUILD_PATH}" /t:Restore,Rebuild,Publish "${PROJECT_NAME}.sln" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk} /verbosity:quiet
+                    "${tool 'MSBuild'}" /t:Restore,Rebuild,Publish "${PROJECT_NAME}.sln" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk} /verbosity:quiet
                 """
                 bat "build.bat"
             }
