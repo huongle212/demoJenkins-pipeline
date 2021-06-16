@@ -4,7 +4,7 @@ def CREDENTIAL_ID = 'github_cre' // Thông tin đã đăng ký trong phần tạ
 def SCM_URL = "https://github.com/huongle212/demoJenkins-pipeline.git" // Link source
 def SOLUTION_NAME='Calculator'
 def PUBLISHER='HuongLT'
-def VERSION = "2.0.1.0"
+def VERSION = "2.0.0.${BUILD_NUMBER}"
 
 pipeline {
     environment {
@@ -20,7 +20,7 @@ pipeline {
         stage('Set Enviroments') {
             steps {
                 script {
-                    VERSION= "2.0.0.${BUILD_NUMBER}"
+                   // VERSION= "2.0.0.${BUILD_NUMBER}"
                 }
             }
         }
