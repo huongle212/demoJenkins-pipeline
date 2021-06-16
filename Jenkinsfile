@@ -2,7 +2,9 @@ def PROJECT_NAME = "Calculator" // Khai báo biển tên Tool để sử dụng 
 def WORKSPACE_DIR = "E:\\Jenkins\\.jenkins\\workspace\\${env.JOB_BASE_NAME}"
 def CREDENTIAL_ID = 'github_cre' // Thông tin đã đăng ký trong phần tạo Credentials_ID
 def SCM_URL = "https://github.com/huongle212/demoJenkins-pipeline.git" // Link source
-def BRANCH = ""
+def SOLUTION_NAME='Calculator'
+def PUBLISHER='HuongLT'
+def VERSION = "2.0.1.0"
 
 pipeline {
     environment {
@@ -16,7 +18,7 @@ pipeline {
         stage('Set Enviroments') {
             steps {
                 script {
-                    BRANCH = "${GIT_BRANCH.split("/")[1]}"
+                    VERSION= "2.0.0.${BUILD_NUMBER}"
                 }
             }
         }
@@ -25,24 +27,25 @@ pipeline {
                 cleanWs()
                 checkout([
                     $class: 'GitSCM', 
-                    branches: [[name: "*/${BRANCH}"]], 
+                    branches: [[name: "*/${GIT_BRANCH.split("/")[1]}"]], 
                     doGenerateSubmoduleConfigurations: false, 
                     extensions: [[$class: 'CloneOption', noTags: true, reference: ""]],
-                    gitTool: 'jgitapache',
-                    submoduleCfg: [], userRemoteConfigs: [[credentialsId: "${CREDENTIAL_ID}", url: "${SCM_URL}"]]
+                    gitTool: 'jgitapache', submoduleCfg: [], 
+                    userRemoteConfigs: [[credentialsId: "${CREDENTIAL_ID}", url: "${SCM_URL}"]]
                 ])
             }
         }
         stage('Build Code') {
             steps {
-                echo "Build Code"
-                // Create Build file
-                writeFile file: 'build.bat', text: """
-                    :: build clickonce bang msbuild
-                    "${tool 'MSBuild'}" /t:Restore,Rebuild,Publish "${PROJECT_NAME}.sln" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk} /verbosity:quiet
+                // build project by msbuild
+                bat '"${tool \'MSBuild\'}" /t:Restore,Rebuild,Publish "${SOLUTION_NAME}.sln" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk},ApplicationVersion=${VERSION},PublisherName="${PUBLISHER}" /verbosity:quiet'
+                // Create index.html file
+                writeFile file: 'createIndex.ps1', text: """
+                    ((Get-Content -path "E:\\OJT\\Winform\\index.html" -Raw) -replace '{product name}','${PROJECT_NAME}' -replace '{publisher name}','${PUBLISHER}' -replace '{app version}','${VERSION}')|Set-content -path "${localPublishOnDisk}index.html"
                 """
-                bat "build.bat"
+                bat 'Powershell.exe -executionpolicy remotesigned -File createIndex.ps1'
             }
         }
+        
     }
 }
