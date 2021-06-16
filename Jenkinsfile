@@ -38,7 +38,7 @@ pipeline {
         stage('Build Code') {
             steps {
                 // build project by msbuild
-                bat '"${tool \'MSBuild\'}" /t:Restore,Rebuild,Publish "${SOLUTION_NAME}.sln" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk},ApplicationVersion=${VERSION},PublisherName="${PUBLISHER}" /verbosity:quiet'
+                bat "\"${tool 'MSBuild'}\" /t:Restore,Rebuild,Publish \"${SOLUTION_NAME}.sln\" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk},ApplicationVersion=${VERSION},PublisherName=\"${PUBLISHER}\" /verbosity:quiet"
                 // Create index.html file
                 writeFile file: 'createIndex.ps1', text: """
                     ((Get-Content -path "E:\\OJT\\Winform\\index.html" -Raw) -replace '{product name}','${PROJECT_NAME}' -replace '{publisher name}','${PUBLISHER}' -replace '{app version}','${VERSION}')|Set-content -path "${localPublishOnDisk}index.html"
