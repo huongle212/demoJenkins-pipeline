@@ -17,13 +17,6 @@ pipeline {
     agent any 
     
     stages {
-        stage('Set Enviroments') {
-            steps {
-                script {
-                   // VERSION= "2.0.0.${BUILD_NUMBER}"
-                }
-            }
-        }
         stage('Checkout GIT') {
             steps {
                 cleanWs()
