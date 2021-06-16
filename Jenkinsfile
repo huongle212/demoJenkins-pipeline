@@ -9,8 +9,10 @@ def VERSION = "2.0.1.0"
 pipeline {
     environment {
         // Publish Informations
-        localPublishOnDisk = "E:\\OJT\\Winform\\Publish\\${PROJECT_NAME}\\"
+        localPublishDir = "E:\\OJT\\Winform\\Publish\\${PROJECT_NAME}\\"
         localPublish = "../${PROJECT_NAME}/"
+        installUrl="http://localhost:2021/${PROJECT_NAME}/"
+
     }
     agent any 
     
@@ -38,10 +40,10 @@ pipeline {
         stage('Build Code') {
             steps {
                 // build project by msbuild
-                bat "\"${tool 'MSBuild'}\" /t:Restore,Rebuild,Publish \"${SOLUTION_NAME}.sln\" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishOnDisk},ApplicationVersion=${VERSION},PublisherName=\"${PUBLISHER}\" /verbosity:quiet"
+                bat "\"${tool 'MSBuild'}\" /t:Restore,Rebuild,Publish \"${SOLUTION_NAME}.sln\" /p:Configuration=Release  /p:ToolsDllPath=dll /p:PublishDir=${localPublishDir},ApplicationVersion=${VERSION},PublisherName=\"${PUBLISHER}\",ProductName=\"${PROJECT_NAME}\",InstallUrl=\"${installUrl}\",UpdateUrl=\"${installUrl}\" /verbosity:quiet"
                 // Create index.html file
                 writeFile file: 'createIndex.ps1', text: """
-                    ((Get-Content -path "E:\\OJT\\Winform\\index.html" -Raw) -replace '{product name}','${PROJECT_NAME}' -replace '{publisher name}','${PUBLISHER}' -replace '{app version}','${VERSION}')|Set-content -path "${localPublishOnDisk}index.html"
+                    ((Get-Content -path "E:\\OJT\\Winform\\index.html" -Raw) -replace '{product name}','${PROJECT_NAME}' -replace '{publisher name}','${PUBLISHER}' -replace '{app version}','${VERSION}')|Set-content -path "${localPublishDir}index.html"
                 """
                 bat 'Powershell.exe -executionpolicy remotesigned -File createIndex.ps1'
             }
